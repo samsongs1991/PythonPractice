@@ -31,38 +31,64 @@ Phase 2:
 class Node:
   # TODO: Set the `_value` `_next` node instance variables
   def __init__(self, value):
-    pass
+    self._value = value
+    self._next = None
+
+  def __str__(self):
+    return f'<Node value="{self._value}" next="{self._next}">'
 
 
 # TODO: Implement a Singly Linked List class here
 class LinkedList:
   # TODO: Set the `_head` node, `_tail` node, and list `_length` instance variables
   def __init__(self):
-    pass
+    self._head = None
+    self._tail = None
+    self._length = 0
 
   # TODO: Implement the get_node method here
   def get_node(self, position):
-    pass
+    if position >= self._length:
+      return None
+    node = self._head
+    idx = 0
+    while idx < position:
+      node = node._next
+    return node
 
   # TODO: Implement the add_to_tail method here
   def add_to_tail(self, value):
-    pass
+    node = Node(value)
+    if self._head is None:
+      self._head = node
+      self._tail = node
+    else:
+      self._tail._next = node
+      self._tail = node
+    self._length += 1
 
   # TODO: Implement the add_to_head method here
   def add_to_head(self, value):
-    pass
+    node = Node(value)
+    node._next = self._head
+    self._head = node
+    self._length += 1
 
   # TODO: Implement the remove_head method here
   def remove_head(self):
-    pass
+    if self._length > 0:
+      self._length -= 1
+      self._head = self._head._next
 
   # TODO: Implement the remove_tail method here
   def remove_tail(self):
-    pass
+    if self._length > 0:
+      self._length -= 1
+      self.get_node(self._length - 1)._next = None
 
   # TODO: Implement the __len__ method here
   def __len__(self):
-    pass
+    return self._length
 
 # Phase 2
 
@@ -84,16 +110,16 @@ class LinkedList:
 
   # TODO: Implement the __str__ method here
   def __str__(self):
-    pass
+    return f'<LinkedList head="{self._head}" tail="{self._tail}" length={self._length}>'
 
 # Phase 1 Manual Testing:
 
 # 1. Test Node and LinkedList initialization
-node = Node('hello')
-print(node)                                     # <__main__.Node object at ...>
-print(node._value)                              # hello
-linked_list = LinkedList()
-print(linked_list)                              # <__main__.LinkedList object at ...>
+# node = Node('hello')
+# print(node)                                     # <__main__.Node object at ...>
+# print(node._value)                              # hello
+# linked_list = LinkedList()
+# print(linked_list)                              # <__main__.LinkedList object at ...>
 
 # # 2. Test getting a node by its position
 # print(linked_list.get_node(0))                # None
@@ -124,10 +150,10 @@ print(linked_list)                              # <__main__.LinkedList object at
 # Phase 2 Manual Testing
 
 # # 1. Test whether the list contains_value a value
-# linked_list = LinkedList()
-# linked_list.add_to_head('new head node')
-# print(linked_list.contains_value('new head node'))      # True
-# print(linked_list.contains_value('App Academy node'))   # False
+linked_list = LinkedList()
+linked_list.add_to_head('new head node')
+print(linked_list.contains_value('new head node'))      # True
+print(linked_list.contains_value('App Academy node'))   # False
 
 # # 2. Test inserting a node value into the list at a specific position
 # linked_list.insert_value(0, 'hello!')
